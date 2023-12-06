@@ -4,6 +4,14 @@ def load_multi_line_input_as_character_arrays():
     for line in lines:
         contents.append([c for c in line.strip()])
     return contents
+    
+def load_multi_line_input_as_string_list():
+    lines = read_input_file()
+    contents = []
+    for line in lines:
+        contents.append(line.strip())
+    return contents
+
 
 def load_multi_line_input(characters_to_remove, delimeters):
     lines = read_input_file()

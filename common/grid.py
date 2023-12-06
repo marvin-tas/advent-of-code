@@ -49,6 +49,9 @@ class GridPosition:
     def manhattan_distance_from_other(self, other):
         return abs(self.x - other.x) + abs(self.y - other.y)
 
+    def is_diagonally_or_directly_adjacent(self, other):
+        return True if abs(self.x - other.x) <= 1 and abs(self.y - other.y) <= 1 and self != other else False
+
 class GridPose:
     def __init__(self, position, direction):
         self.position = position
