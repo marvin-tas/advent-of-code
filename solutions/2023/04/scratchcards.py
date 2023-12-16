@@ -17,7 +17,7 @@ class ScratchCard:
         return 2 ** (n_matches - 1) if n_matches > 0 else 0
         
 def parse_number_list(number_list):
-    return [int(n.strip()) for n in number_list.split(' ') if len(n) is not 0]
+    return [int(n.strip()) for n in number_list.split(' ') if len(n) != 0]
 
 def parse_input_line(input_line):
     parts = input_line.split(':')

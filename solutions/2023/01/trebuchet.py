@@ -20,28 +20,6 @@ digit_texts = {
 #   i.e. twone would have "two" as the first digit but "one" as the last
 
 
-"""
-This function was originally written for part 2.
-It replaces the word representation of the digit with the numeric one and prioritises by order of appearance e.g. twone would be 2ne
-What i didnt realised is that this doesnt work because the "last" digit here is still 1 ("one")
-This was done assuming the string could be turned into a form with only digits representing
-however it seems this is not possible as "twonetwone" would have 2 as the first digit and 1 as the last.
-
-def replace_digit_text_with_value(text):
-    new_text = text
-    char_index = 0
-    while (char_index < len(new_text)):
-        for digit_text in digit_texts:
-            replacement_length = len(digit_text)
-            if len(new_text) < char_index + replacement_length:
-                continue
-            if new_text[char_index:char_index + replacement_length] == digit_text:
-                new_text = new_text[:char_index] + digit_texts[digit_text] + new_text[char_index + replacement_length:]
-                break
-        char_index += 1
-    return new_text
-"""
-
 def get_calibration_code_1(input_line):
     numeric_values = [c for c in list(input_line) if c.isnumeric()]
     return int(numeric_values[0] + numeric_values[-1])
@@ -69,8 +47,6 @@ def get_calibration_code_2(input_line):
             last_digit = current_digit
         char_index += 1
     return int(first_digit + last_digit)
-
-
     
 
 puzzle_input_lines = load_multi_line_input_as_string_list()
@@ -80,9 +56,6 @@ calibration_code_sum_2 = 0
 for puzzle_input_line in puzzle_input_lines:
     calibration_code_sum_1 += get_calibration_code_1(puzzle_input_line)
     calibration_code_sum_2 += get_calibration_code_2(puzzle_input_line)
-
-    print(puzzle_input_line)
-    print(get_calibration_code_2(puzzle_input_line))
 
 
 print("Part 1: " + str(calibration_code_sum_1))

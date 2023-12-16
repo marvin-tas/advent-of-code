@@ -21,7 +21,6 @@ class FiniteIrregularGrid:
     def is_position_on_grid(self, position):
         return position in self.valid_positions
 
-
 class GridPosition:
     
     def __init__(self, x, y):
@@ -37,6 +36,12 @@ class GridPosition:
     def __str__(self):
         return "[x:" + str(self.x) + ",y:" + str(self.y) + "]"
 
+    def position_at_displacement(self, displacement):
+        return GridPosition(self.x + displacement.dx, self.y + displacement.dy)
+
+    def displacement_to_other(self, other):
+        return GridDisplacement(other.x - self.x, other.y - self.y)
+    
     def position_at_dx(self, dx):
         return GridPosition(self.x + dx, self.y)
 
@@ -51,6 +56,34 @@ class GridPosition:
 
     def is_diagonally_or_directly_adjacent(self, other):
         return True if abs(self.x - other.x) <= 1 and abs(self.y - other.y) <= 1 and self != other else False
+
+class GridDisplacement:
+
+    def __init__(self, dx, dy):
+        self.dx = dx
+        self.dy = dy
+
+    def __add__(self, other):
+        return GridDisplacement(self.x + other.x, self.y + other.y)
+
+    def __sub__(self, other):
+        return self.add(-other)
+
+    def __neg__(self):
+        return GridDisplacement(-self.dx, -self.dy)
+
+    def __eq__(self, other):
+        return self.dx == other.dx and self.dy == other.dy
+
+    def right_of_other(self, other):
+        # Using vector cross product
+        value = self.dx * other.dy - self.dy * other.dx
+        if value == 0:
+            return 0
+        else:
+            return 1 if value > 0 else -1
+            
+
 
 class GridPose:
     def __init__(self, position, direction):
@@ -90,14 +123,14 @@ class GridPose:
                 new_direction = GridDirection.DOWN
         return GridPose(self.position, new_direction)
 
-    def pose_move_in_current_direction(self, displacement):
+    def pose_move_in_current_direction(self, distance):
         match self.direction:
             case GridDirection.UP:
-                new_position = self.position.position_at_dy(displacement)
+                new_position = self.position.position_at_dy(distance)
             case GridDirection.RIGHT:
-                new_position = self.position.position_at_dx(displacement)
+                new_position = self.position.position_at_dx(distance)
             case GridDirection.DOWN:
-                new_position = self.position.position_at_dy(-displacement)
+                new_position = self.position.position_at_dy(-distance)
             case GridDirection.LEFT:
-                new_position = self.position.position_at_dx(-displacement)
+                new_position = self.position.position_at_dx(-distance)
         return GridPose(new_position, self.direction)
