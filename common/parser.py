@@ -13,14 +13,6 @@ def load_multi_line_input_as_string_list():
     return contents
 
 
-def load_multi_line_input(characters_to_remove, delimeters):
-    lines = read_input_file()
-    contents = []
-    for line in lines:
-        s = remove_characters_from_string(line, characters_to_remove)
-        contents.append(split_string_by_delimeters(s, delimeters))
-    return contents
-
 def load_multi_line_input_separated_by_spaces():
     lines = read_input_file()
     contents = []
@@ -28,17 +20,28 @@ def load_multi_line_input_separated_by_spaces():
         contents.append(line.split())
     return contents
 
+def load_multi_line_input(characters_to_remove=[], delimeters=[]):
+    lines = read_input_file()
+    contents = []
+    for line in lines:
+        s = remove_characters_from_string(line, characters_to_remove)
+        contents.append(split_string_by_delimeters(s, delimeters))
+    return contents
 
-def load_single_line_input(characters_to_remove, delimeters):
+def load_single_line_input(characters_to_remove=[], delimeters=[]):
     line = read_input_file()[0]
     s = remove_characters_from_string(line, characters_to_remove)
     return split_string_by_delimeters(s, delimeters)
+
+# Read and close file
 
 def read_input_file():
     f = open('input.txt', 'r')
     contents = f.readlines()
     f.close()
     return contents
+
+# String utilities
 
 def remove_characters_from_string(s, characters_to_remove):
     for c in characters_to_remove:
